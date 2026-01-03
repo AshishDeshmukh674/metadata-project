@@ -1,0 +1,60 @@
+# ===================================
+# Security - NEVER commit these!
+# ===================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+credentials.json
+
+# ===================================
+# Python
+# ===================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg-info/
+dist/
+build/
+
+# ===================================
+# IDE & Editors
+# ===================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ===================================
+# Testing & Coverage
+# ===================================
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# ===================================
+# Logs
+# ===================================
+*.log
+logs/
+
+# ===================================
+# Temporary files
+# ===================================
+tmp/
+temp/
+*.tmp
+
+.env

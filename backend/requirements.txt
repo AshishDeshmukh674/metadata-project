@@ -1,0 +1,49 @@
+# ===================================
+# Core Web Framework
+# ===================================
+fastapi==0.109.0          # Modern async web framework
+uvicorn[standard]==0.27.0 # ASGI server for running FastAPI
+pydantic==2.5.3           # Data validation and settings
+pydantic-settings==2.1.0  # Environment-based configuration
+
+# ===================================
+# AWS & Object Storage
+# ===================================
+boto3==1.34.34            # AWS SDK for Python (S3 operations)
+s3fs==2023.12.2           # Pythonic file interface to S3 (compatible with pyiceberg)
+
+# ===================================
+# Lakehouse Format Libraries
+# ===================================
+pyiceberg==0.5.1          # Apache Iceberg Python library
+deltalake==0.15.0         # Delta Lake (Rust-backed, fast)
+pyarrow==14.0.2           # Parquet file reading & Apache Arrow
+
+# Note: s3fs version locked to 2023.12.2 for compatibility with pyiceberg's fsspec requirement
+
+# Note: Apache Hudi Python support is limited, we'll use direct file reading
+
+# ===================================
+# Data Processing & SQL
+# ===================================
+duckdb==0.10.0            # In-process SQL database for Parquet queries
+pandas==2.2.0             # Data manipulation library
+
+# ===================================
+# LLM Integration
+# ===================================
+groq==1.0.0               # Groq API client for natural language processing
+
+# ===================================
+# Utilities
+# ===================================
+python-dotenv==1.0.0      # Load environment variables from .env
+python-multipart==0.0.6   # For file upload support (if needed)
+
+# ===================================
+# Development & Testing (Optional)
+# ===================================
+# pytest==7.4.4           # Testing framework
+# httpx==0.26.0           # Async HTTP client for testing
+# black==24.1.1           # Code formatter
+# ruff==0.1.14            # Fast Python linter
