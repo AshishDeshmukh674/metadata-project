@@ -22,7 +22,7 @@ from app.models.datastore import (
 )
 from app.services.user_s3_service import user_s3_service
 from app.services.groq_service import groq_service
-from app.services.duckdb_service import duckdb_service
+from app.services.parquet_service import parquet_service
 from app.config import settings
 from app.api.auth import get_session_store
 
@@ -448,7 +448,7 @@ async def preview_changes(
         preview_data = None
         if sql_result["operation_type"] != "SELECT":
             logger.info("👀 Previewing affected rows...")
-            preview_result = duckdb_service.preview_changes(
+            preview_result = parquet_service.preview_changes(
                 s3_path=request.s3_path,
                 sql_query=sql_result["sql"],
                 credentials=credentials,
@@ -604,7 +604,7 @@ async def execute_changes(
         # Create backup if requested
         if request.create_backup and operation_type != "SELECT":
             logger.info("💾 Creating backup...")
-            backup_result = duckdb_service.create_backup(
+            backup_result = parquet_service.create_backup(
                 s3_path=first_parquet_path,
                 credentials=credentials
             )
@@ -618,7 +618,7 @@ async def execute_changes(
         
         # Execute SQL
         logger.info("⚡ Executing SQL...")
-        execution_result = duckdb_service.execute_sql_on_s3_parquet(
+        execution_result = parquet_service.execute_sql_on_s3_parquet(
             s3_path=first_parquet_path,
             sql_query=sql_query,
             credentials=credentials,
@@ -634,7 +634,7 @@ async def execute_changes(
         # Write back to S3 if data was modified
         if operation_type != "SELECT" and execution_result["result_data"] is not None:
             logger.info("📤 Writing modified data back to S3...")
-            write_result = duckdb_service.write_dataframe_to_s3(
+            write_result = parquet_service.write_dataframe_to_s3(
                 df=execution_result["result_data"],
                 s3_path=first_parquet_path,
                 credentials=credentials

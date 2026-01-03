@@ -24,7 +24,7 @@ import logging
 import sys
 
 from app.config import settings, validate_settings
-from app.api import health, auth, datastore
+from app.api import health, auth, datastore, parquet, iceberg, delta, hudi, formats
 
 # ===================================
 # Configure Logging
@@ -68,7 +68,13 @@ async def lifespan(app: FastAPI):
         logger.info("   1. POST /api/v1/auth/validate-credentials")
         logger.info("   2. POST /api/v1/auth/create-session")
         logger.info("")
-        logger.info("   Datastore Operations (requires X-Session-ID header):")
+        logger.info("   Table Format APIs (requires X-Session-ID header):")
+        logger.info("   - Parquet: /api/v1/parquet/preview-changes, /execute-changes")
+        logger.info("   - Iceberg: /api/v1/iceberg/preview-changes, /execute-changes")
+        logger.info("   - Delta:   /api/v1/delta/preview-changes, /execute-changes")
+        logger.info("   - Hudi:    /api/v1/hudi/preview-changes, /execute-changes")
+        logger.info("")
+        logger.info("   Legacy Datastore (requires X-Session-ID header):")
         logger.info("   3. GET /api/v1/datastore/info")
         logger.info("   4. GET /api/v1/datastore/metadata")
         logger.info("")
@@ -109,17 +115,35 @@ app = FastAPI(
     ## Authentication Flow
     1. POST /api/v1/auth/validate-credentials - Validate AWS credentials
     2. POST /api/v1/auth/create-session - Create session (returns session_id)
-    3. Use session_id in X-Session-ID header for all datastore API calls
+    3. Use session_id in X-Session-ID header for all API calls
     
-    ## Datastore APIs (Requires X-Session-ID header)
+    ## Table Format APIs (Requires X-Session-ID header)
+    
+    ### Parquet Operations
+    - POST /api/v1/parquet/preview-changes - Preview modifications
+    - POST /api/v1/parquet/execute-changes - Execute modifications
+    
+    ### Iceberg Operations (Coming Soon)
+    - POST /api/v1/iceberg/preview-changes
+    - POST /api/v1/iceberg/execute-changes
+    
+    ### Delta Lake Operations
+    - POST /api/v1/delta/preview-changes - Preview modifications
+    - POST /api/v1/delta/execute-changes - Execute modifications (read-only currently)
+    
+    ### Hudi Operations (Coming Soon)
+    - POST /api/v1/hudi/preview-changes
+    - POST /api/v1/hudi/execute-changes
+    
+    ## Legacy Datastore APIs (Requires X-Session-ID header)
     - GET /api/v1/datastore/info - Get table information
     - GET /api/v1/datastore/metadata - Get schema and columns
     
     ## Supported Formats
-    - Apache Parquet
-    - Apache Iceberg
-    - Delta Lake
-    - Apache Hudi
+    - ✅ Apache Parquet (Full support)
+    - 🚧 Apache Iceberg (In development)
+    - 🚧 Delta Lake (Read support, write coming soon)
+    - 🚧 Apache Hudi (Requires Spark integration)
     """,
     debug=settings.debug,
     docs_url="/docs",      # Swagger UI
@@ -146,7 +170,14 @@ app.add_middleware(
 # ===================================
 app.include_router(health.router)
 app.include_router(auth.router)
+app.include_router(formats.router)  # Format discovery
 app.include_router(datastore.router)
+
+# Table format-specific APIs
+app.include_router(parquet.router)
+app.include_router(iceberg.router)
+app.include_router(delta.router)
+app.include_router(hudi.router)
 
 
 # ===================================

@@ -1,6 +1,6 @@
 """
-DuckDB Service
-==============
+Parquet Service
+===============
 Execute SQL queries on Parquet files using DuckDB.
 """
 
@@ -17,12 +17,12 @@ from app.models.user_credentials import UserAWSCredentials
 logger = logging.getLogger(__name__)
 
 
-class DuckDBService:
+class ParquetService:
     """Service for executing SQL on Parquet files using DuckDB."""
     
     def __init__(self):
-        """Initialize DuckDB service."""
-        logger.info("✅ DuckDB service initialized")
+        """Initialize Parquet service."""
+        logger.info("✅ Parquet service initialized")
     
     def execute_sql_on_s3_parquet(
         self,
@@ -355,4 +355,4 @@ class DuckDBService:
 
 
 # Global service instance
-duckdb_service = DuckDBService()
+parquet_service = ParquetService()
