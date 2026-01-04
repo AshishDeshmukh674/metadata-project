@@ -24,7 +24,7 @@ import logging
 import sys
 
 from app.config import settings, validate_settings
-from app.api import health, auth, datastore, parquet, iceberg, delta, hudi, formats
+from app.api import health, auth, datastore, parquet, iceberg, delta, hudi, formats, spark_routes
 
 # ===================================
 # Configure Logging
@@ -178,6 +178,9 @@ app.include_router(parquet.router)
 app.include_router(iceberg.router)
 app.include_router(delta.router)
 app.include_router(hudi.router)
+
+# Spark-based processing APIs
+app.include_router(spark_routes.router)
 
 
 # ===================================

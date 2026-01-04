@@ -30,6 +30,12 @@ duckdb==0.10.0            # In-process SQL database for Parquet queries
 pandas==2.2.0             # Data manipulation library
 
 # ===================================
+# Apache Spark (Local Mode)
+# ===================================
+pyspark==3.5.0            # Apache Spark for distributed data processing
+delta-spark==3.0.0        # Delta Lake with Spark integration
+
+# ===================================
 # LLM Integration
 # ===================================
 groq==1.0.0               # Groq API client for natural language processing
