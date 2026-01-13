@@ -1,16 +1,4 @@
-# ===================================
-# Security - NEVER commit these!
-# ===================================
-.env
-.env.local
-.env.*.local
-*.pem
-*.key
-credentials.json
-
-# ===================================
 # Python
-# ===================================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -19,42 +7,60 @@ __pycache__/
 venv/
 env/
 ENV/
-.venv
-pip-log.txt
-pip-delete-this-directory.txt
-*.egg-info/
-dist/
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# ===================================
-# IDE & Editors
-# ===================================
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
 
-# ===================================
-# Testing & Coverage
-# ===================================
-.pytest_cache/
-.coverage
-htmlcov/
-*.cover
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
-# ===================================
+# AWS
+.aws/
+.env
+.env.local
+.env.example
+*.ps1
+start_api.ps1
+
 # Logs
-# ===================================
 *.log
 logs/
 
-# ===================================
-# Temporary files
-# ===================================
-tmp/
-temp/
-*.tmp
+# OS
+.DS_Store
+Thumbs.db
 
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Environment
 .env
+.env.local
+
+
+.start_api.ps1
+.src/generate_tables/.env.example:3
